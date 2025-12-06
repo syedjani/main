@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Game Slot Booking – Free Fire & PUBG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+  
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f172a, #020617);
+      color: #e5e7eb;
+    }
+
+
+    .card {
+      background: url("futuristic-ninja-digital-art.jpg");
+      border-radius: 20px;
+      padding: 24px 24px 28px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.7rem;
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 0.88rem;
+      color: #9ca3af;
+      margin-top: 4px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    label {
+      font-size: 0.85rem;
+      color: #e5e7eb;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, select {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s, transform 0.05s;
+    }
+
+    input:focus, select:focus {
+      border-color: #22c55e;
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .required {
+      color: #f97316;
+      margin-left: 3px;
+    }
+
+    .game-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      padding: 9px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.86rem;
+      cursor: pointer;
+      transition: background 0.15s, border 0.15s, transform 0.05s;
+      background: #020617;
+    }
+
+    .pill span.icon {
+      font-size: 1rem;
+    }
+
+    .pill input {
+      display: none;
+    }
+
+    .pill.selected {
+      border-color: #22c55e;
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: #022c22;
+      font-weight: 600;
+    }
+
+    button {
+      margin-top: 8px;
+      width: 100%;
+      border-radius: 999px;
+      padding: 11px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg, #22c55e, #4ade80);
+      color: #022c22;
+      box-shadow: 0 14px 30px rgba(34, 197, 94, 0.45);
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(34, 197, 94, 0.55);
+    }
+
+    button:active {
+      transform: translateY(0px);
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.45);
+    }
+
+    .small {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .messages {
+      margin-bottom: 10px;
+    }
+
+    .msg {
+      font-size: 0.82rem;
+      padding: 8px 10px;
+      border-radius: 10px;
+      margin-bottom: 6px;
+    }
+
+    .msg.success {
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(74, 222, 128, 0.6);
+      color: #bbf7d0;
+    }
+
+    .msg.error {
+      background: rgba(248, 113, 113, 0.08);
+      border: 1px solid rgba(248, 113, 113, 0.6);
+      color: #fecaca;
+    }
+
+    .card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+     }
+
+    @media (max-width: 520px) {
+      .card {
+        margin: 16px;
+        padding: 18px 16px 22px;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Game Slot Booking</h1>
+    <p class="subtitle">Book your match slot for <strong>Free Fire</strong> or <strong>PUBG</strong>.</p>
+
+    <!-- Flash messages from Flask -->
+    <div class="messages">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="msg {{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    <form action="/book" method="POST">
+      <div class="field">
+        <label>Player Name<span class="required">*</span></label>
+        <input type="text" name="name" placeholder="Enter your in-game name" required />
+      </div>
+
+      <div class="field">
+        <label>Game<span class="required">*</span></label>
+        <div class="game-row">
+          <label class="pill">
+            <span class="icon">🔥</span>
+            <span>Free Fire</span>
+            <input type="radio" name="game" value="Free Fire" required />
+          </label>
+          <label class="pill">
+            <span class="icon">🎮</span>
+            <span>PUBG</span>
+            <input type="radio" name="game" value="PUBG" required />
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Date<span class="required">*</span></label>
+        <input type="date" name="date" required />
+      </div>
+
+      <div class="field">
+        <label>Time Slot<span class="required">*</span></label>
+        <select name="time_slot" required>
+          <option value="">Select a time slot</option>
+          <option>10:00 AM - 11:00 AM</option>
+          <option>11:00 AM - 12:00 PM</option>
+          <option>12:00 PM - 1:00 PM</option>
+          <option>2:00 PM - 3:00 PM</option>
+          <option>3:00 PM - 4:00 PM</option>
+          <option>4:00 PM - 5:00 PM</option>
+          <option>8:00 PM - 9:00 PM</option>
+          <option>9:00 PM - 10:00 PM</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Phone (optional)</label>
+        <input type="tel" name="phone" placeholder="WhatsApp / contact number" />
+      </div>
+
+      <button type="submit">Book Slot</button>
+
+      <p class="small">
+        All bookings are stored in an Excel file (<code>bookings.xlsx</code>) on the server.
+      </p>
+    </form>
+
+    <script>
+      // Small script to highlight selected game pill
+      const pills = document.querySelectorAll(".pill");
+      pills.forEach(pill => {
+        pill.addEventListener("click", () => {
+          pills.forEach(p => p.classList.remove("selected"));
+          pill.classList.add("selected");
+        });
+      });
+    </script>
+  </div>
+</body>
+</html>
